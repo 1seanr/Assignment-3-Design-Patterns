@@ -40,14 +40,9 @@ class CmdController(object):
             return "Please validate the data using the 'validate' command"
 
     def import_from_excel(self, input_str):
-        file_address = input_str.rsplit('\\', 1)
-        if len(file_address) == 1 and file_address[0].endswith(".xls"):
-            file_address.append("")
-            file_address[1] = file_address[0]
-            file_address[0] = ""
-        if len(file_address) == 2:
+        if input_str.endswith(".xls"):
             try:
-                self.__excel_view.set(file_address[1], file_address[0])
+                self.__excel_view.set(input_str)
                 self.__excel_view.calculate()
                 self.__imported_data_list = self.__excel_view.get()
                 self.__validation_flag = False
@@ -97,7 +92,7 @@ class CmdController(object):
             self.__db_pic_view.set(line, self.__db_view.get('*', ''))
             return self.__db_pic_view.get()
         # Loading from a pickle file
-        elif sav_or_loa == 'l':
+        if sav_or_loa == 'l':
             array_of_input = line.split(' ')
             try:
                 if array_of_input[0] == "replace" or array_of_input[0] == \
@@ -121,7 +116,10 @@ class CmdController(object):
             if array_of_input[0] == "replace":
                 self.__db_view.set(loaded_data, 'R')
             # When adding to the current DB
-            elif array_of_input[0] == "add":
+            if array_of_input[0] == "add":
                 self.__db_view.set(loaded_data)
             return "Data loaded from " + array_of_input[1] + \
                    ".pickle Successfully"
+
+    def close_db(self):
+        self.__db_view.close_connection()

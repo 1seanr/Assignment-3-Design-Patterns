@@ -16,10 +16,7 @@ class ValidateData:
                 today.year - birth_date.year - \
                 ((today.month, today.day) < (birth_date.month, birth_date.day))
             if calculated_age == self.__age:
-                if (today.year - birth_date.year) >= 0:
-                    is_valid = True
-                else:
-                    is_valid = False
+                is_valid = True
             else:
                 is_valid = False
         except ValueError:

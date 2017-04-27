@@ -1,6 +1,6 @@
 import pickle
 
-from view import View
+from i_view import View
 
 
 class DBPickleView(View):

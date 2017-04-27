@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from view import View
+from i_view import View
 
 
 class MatPlotView(View):

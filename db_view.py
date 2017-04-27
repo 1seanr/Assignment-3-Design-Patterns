@@ -1,21 +1,16 @@
 import sqlite3
 from sqlite3 import OperationalError, IntegrityError
 
-import view
+from i_view import View
 
 
-class DBView(view.View):
+class DBView(View):
 
     def __init__(self):
         # Connecting to the database file
         self.__sqlite_file = 'employeeDb'    # name of the sqlite database file
         # Creates connection object
-        try:
-            self.__conn = sqlite3.connect(self.__sqlite_file)
-        except Exception as e:
-            print(e)
-        else:
-            print("Opened successfully")
+        self.__conn = sqlite3.connect(self.__sqlite_file)
         # creates curser object
         self.__cur = self.__conn.cursor()
         self.__recreate_db()
@@ -79,8 +74,6 @@ class DBView(view.View):
                 self.__conn.commit()
             except IntegrityError:
                 invalid_array.append(count)
-            except Exception as e:
-                print("Could not save data to the data base due to\n" + str(e))
             finally:
                 count += 1
         for item in invalid_array:
