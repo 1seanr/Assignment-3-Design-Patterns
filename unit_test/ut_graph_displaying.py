@@ -22,7 +22,7 @@ class GraphingTests(unittest.TestCase):
         self.con.matplot_data()
 
     def test_ImportDataThenPlot(self):
-        self.con.import_from_excel("..\TestingDir\FullRangeValidTestFile.xls")
+        self.con.import_from_excel("TestingDir\FullRangeValidTestFile.xls")
         self.con.validate_data()
         self.con.save_to_db()
         self.con.matplot_data()

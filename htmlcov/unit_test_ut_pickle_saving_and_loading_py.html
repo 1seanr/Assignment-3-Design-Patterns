@@ -165,7 +165,7 @@
 <p id="t24" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t25" class="stm run hide_run">    <span class="key">def</span> <span class="nam">test_savingUsingPickle_shouldSaveAsTest</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t26" class="stm run hide_run">        <span class="nam">actual</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">con</span><span class="op">.</span><span class="nam">db_pickle</span><span class="op">(</span><span class="str">'s'</span><span class="op">,</span> <span class="str">'test'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t27" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertEqual</span><span class="op">(</span><span class="str">"Saved Successfully as: test.pickle"</span><span class="op">,</span> <span class="nam">actual</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t27" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertEqual</span><span class="op">(</span><span class="op">[</span><span class="str">"Saved Successfully as: test.pickle"</span><span class="op">]</span><span class="op">,</span> <span class="nam">actual</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t28" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t29" class="stm run hide_run">    <span class="key">def</span> <span class="nam">test_loadingWithPickle_withoutAFileName</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t30" class="stm run hide_run">        <span class="nam">actual</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">con</span><span class="op">.</span><span class="nam">db_pickle</span><span class="op">(</span><span class="str">'l'</span><span class="op">,</span> <span class="str">'add'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
@@ -183,7 +183,7 @@
 <p id="t42" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t43" class="stm run hide_run">    <span class="key">def</span> <span class="nam">test_loadingWithPickle_fileThatDoesntExist</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t44" class="stm run hide_run">        <span class="nam">actual</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">con</span><span class="op">.</span><span class="nam">db_pickle</span><span class="op">(</span><span class="str">'l'</span><span class="op">,</span> <span class="str">'add TestFileThatDoesntExist'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t45" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertEqual</span><span class="op">(</span><span class="str">"File not found"</span><span class="op">,</span> <span class="nam">actual</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t45" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">assertEqual</span><span class="op">(</span><span class="op">[</span><span class="str">"File not found"</span><span class="op">]</span><span class="op">,</span> <span class="nam">actual</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t46" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t47" class="stm run hide_run">    <span class="key">def</span> <span class="nam">test_loadingWithPickle_importsAndReplaces</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t48" class="stm run hide_run">        <span class="nam">self</span><span class="op">.</span><span class="nam">con</span><span class="op">.</span><span class="nam">db_pickle</span><span class="op">(</span><span class="str">'s'</span><span class="op">,</span> <span class="str">'test'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
@@ -216,7 +216,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.3.4</a>,
-            created at 2017-04-26 21:52
+            created at 2017-04-27 16:41
         </p>
     </div>
 </div>

@@ -9,7 +9,6 @@ from excel_import_view import ExcelView
 from matplot_view import MatPlotView
 
 
-
 class ValidatingAndViewingTests(unittest.TestCase):
     def setUp(self):
         # be executed before each test

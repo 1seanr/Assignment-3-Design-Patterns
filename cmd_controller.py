@@ -80,8 +80,7 @@ class CmdController(object):
 
     def matplot_data(self):
         # passes the db data to the matplot view
-        self.__mp_view.set(self.__db_view.get("*", ""))
-        self.__mp_view.get()
+        self.__mp_view.display(self.__db_view.get("*", ""))
 
     def db_pickle(self, sav_or_loa, line):
         # makes sure they input a parameter
@@ -89,15 +88,15 @@ class CmdController(object):
             return "Invalid use of the command"
         # Saving to a pickle file
         if sav_or_loa == 's':
-            self.__db_pic_view.set(line, self.__db_view.get('*', ''))
+            self.__db_pic_view.set([line, self.__db_view.get('*', '')])
             return self.__db_pic_view.get()
         # Loading from a pickle file
-        if sav_or_loa == 'l':
+        else:  # must me 'l'
             array_of_input = line.split(' ')
             try:
                 if array_of_input[0] == "replace" or array_of_input[0] == \
                         "add":
-                    self.__db_pic_view.set(array_of_input[1])
+                    self.__db_pic_view.set([array_of_input[1], None])
                 else:
                     return "Invalid command please use either 'replace' or " \
                            "'add'"
@@ -109,12 +108,13 @@ class CmdController(object):
 
             # If it couldn't find the file it will return an error message
             # here and stop
-            if isinstance(loaded_data, str):
-                return loaded_data
+            if not loaded_data[0]:
+                return ['File not found']
 
             # When replacing current DB
             if array_of_input[0] == "replace":
-                self.__db_view.set(loaded_data, 'R')
+                replace_loaded_data = [loaded_data, 'R']
+                self.__db_view.set(replace_loaded_data)
             # When adding to the current DB
             if array_of_input[0] == "add":
                 self.__db_view.set(loaded_data)

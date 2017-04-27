@@ -1,9 +1,9 @@
 from cmd import Cmd
 
-import i_cview
+from i_cview import CView
 
 
-class CmdView(Cmd, i_cview.CView):
+class CmdView(Cmd, CView):
     def __init__(self):
         Cmd.__init__(self)
         self.prompt = ">>> "

@@ -48,7 +48,8 @@ class ValidateData:
                     if col != "":
                         if inner_list_pos == 2:
                             self.__age = int(float(col))
-                        # This is to check the birth date using date check method
+                        # This is to check the birth date using date
+                        # check method
                         if inner_list_pos == 6:
                             try:
                                 col = col.replace("/", "-").replace(" ", "-")
@@ -64,8 +65,8 @@ class ValidateData:
                                     temp_result_list.append(False)
                             except AttributeError:
                                 temp_result_list.append(False)
-                        # If its not the birth date its checking it uses the regex
-                        # checking method
+                        # If its not the birth date its checking it
+                        # uses the regex checking method
                         elif isinstance(col, float):
                             temp_result_list.append(self.__reg_exp_checker(
                                 regexp_list[inner_list_pos], str(int(col))))

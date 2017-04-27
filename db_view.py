@@ -59,9 +59,10 @@ class DBView(View):
         rows = self.__cur.fetchall()
         return rows
 
-    def set(self, data_list=None, replace=None):
-        if replace == 'R':
+    def set(self, data_list):
+        if data_list[1] == 'R':
             self.__recreate_db()
+            data_list = data_list[0]
         count = 1
         invalid_array = []
         for row in data_list:

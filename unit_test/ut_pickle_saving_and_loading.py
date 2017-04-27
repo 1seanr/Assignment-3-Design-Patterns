@@ -24,7 +24,7 @@ class PickleSaveAndLoadTests(unittest.TestCase):
 
     def test_savingUsingPickle_shouldSaveAsTest(self):
         actual = self.con.db_pickle('s', 'test')
-        self.assertEqual("Saved Successfully as: test.pickle", actual)
+        self.assertEqual(["Saved Successfully as: test.pickle"], actual)
 
     def test_loadingWithPickle_withoutAFileName(self):
         actual = self.con.db_pickle('l', 'add')
@@ -42,7 +42,7 @@ class PickleSaveAndLoadTests(unittest.TestCase):
 
     def test_loadingWithPickle_fileThatDoesntExist(self):
         actual = self.con.db_pickle('l', 'add TestFileThatDoesntExist')
-        self.assertEqual("File not found", actual)
+        self.assertEqual(["File not found"], actual)
 
     def test_loadingWithPickle_importsAndReplaces(self):
         self.con.db_pickle('s', 'test')

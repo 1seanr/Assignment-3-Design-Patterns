@@ -6,16 +6,15 @@ from i_view import View
 class ExcelView(View):
 
     def __init__(self):
-        self.__file_path = ""
-        self.__filename = ""
+        self.__file_path_and_filename = ""
         self.__myList = []
 
-    def set(self, filename=None):
-        self.__filename = filename
+    def set(self, file_path_and_filename):
+        self.__file_path_and_filename = file_path_and_filename
 
     def calculate(self):
         self.__myList = []
-        book = xlrd.open_workbook(self.__filename)
+        book = xlrd.open_workbook(self.__file_path_and_filename)
         sh = book.sheet_by_index(0)
         # my testing
         for rx in range(sh.nrows):

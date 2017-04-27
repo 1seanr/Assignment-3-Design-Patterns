@@ -1,5 +1,3 @@
-import unittest
-
 from unit_test.ut_db_handling import *
 from unit_test.ut_graph_displaying import *
 from unit_test.ut_pickle_saving_and_loading import *

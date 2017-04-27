@@ -121,33 +121,3 @@ class OverallUserInteraction(unittest.TestCase):
             self.con_view.do_loaddb('')
         output = out.getvalue().strip()
         self.assertEqual(output, 'Invalid use of the command')
-
-
-
-
-
-    # def test_load_command(self):
-    #     with patch('sys.stdout', new=StringIO()) as output:
-    #         self.con_view.do_load('')
-    #     expected = []
-    #     self.assertEqual(expected, output.getValue().strip())
-
-
-        #self.runTests("loaddb", "Bye")
-
-    # def test_set_controller(self):
-    #     self.runTests("quit", "Bye")
-    #
-    # def test_set_controller(self):
-    #     self.runTests("quit", "Bye")
-    #
-    # def test_set_controller(self):
-    #     self.runTests("quit", "Bye")
-    #
-    # def test_set_controller(self):
-    #     self.runTests("quit", "Bye")
-    #
-    # def test_set_controller(self):
-    #     self.runTests("quit", "Bye")
-
-
