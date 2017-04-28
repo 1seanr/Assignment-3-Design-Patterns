@@ -3,7 +3,6 @@ import unittest
 from cmd_controller import CmdController
 from cmd_view import CmdView
 from db_pickle_view import DBPickleView
-from db_view import DBView
 from excel_import_view import ExcelView
 from matplot_view import MatPlotView
 
@@ -11,8 +10,8 @@ from matplot_view import MatPlotView
 class PickleSaveAndLoadTests(unittest.TestCase):
     def setUp(self):
         # be executed before each test
-        self.con = CmdController(CmdView(), ExcelView(), DBView(),
-                                 MatPlotView(), DBPickleView())
+        self.con = CmdController(CmdView(), ExcelView(), MatPlotView(),
+                                 DBPickleView())
 
     def tearDown(self):
         # be executed after each test case

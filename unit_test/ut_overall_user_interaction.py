@@ -1,13 +1,12 @@
+import sys
 import unittest
-from unittest.mock import patch
 from contextlib import contextmanager
 from io import StringIO
-import sys
+from unittest.mock import patch
 
 from cmd_controller import CmdController
 from cmd_view import CmdView
 from db_pickle_view import DBPickleView
-from db_view import DBView
 from excel_import_view import ExcelView
 from matplot_view import MatPlotView
 
@@ -15,8 +14,8 @@ from matplot_view import MatPlotView
 class OverallUserInteraction(unittest.TestCase):
     def setUp(self):
         # be executed before each test
-        self.con = CmdController(CmdView(), ExcelView(), DBView(),
-                                 MatPlotView(), DBPickleView())
+        self.con = CmdController(CmdView(), ExcelView(), MatPlotView(),
+                                 DBPickleView())
 
         self.con_view = CmdView()
         self.con_view.set_controller(self.con)

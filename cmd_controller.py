@@ -1,14 +1,17 @@
 from sqlite3 import OperationalError
+from db_setup import DBSetup
+from db_adding_data_view import AddDataToDB
+from db_getting_data_view import GetDataFromDB
 
 from validating_input import ValidateData
 
 
 class CmdController(object):
 
-    def __init__(self, cmd_view, excel_view, db_view, mp_view, db_p_view):
+    def __init__(self, cmd_view, excel_view, mp_view, db_p_view):
+        DBSetup()
         self.__cmd_view = cmd_view
         self.__excel_view = excel_view
-        self.__db_view = db_view
         self.__mp_view = mp_view
         self.__db_pic_view = db_p_view
         self.__imported_data_list = []
@@ -22,19 +25,21 @@ class CmdController(object):
         self.__cmd_view.cmdloop()
 
     def load_from_db(self, line):
+        get_data = GetDataFromDB()
         try:
             if line != "":
                 selections, conditions = line.split(" ")
             else:
                 selections = "*"
                 conditions = ""
-            return self.__db_view.get(selections, conditions)
+            return get_data.get(selections, conditions)
         except (ValueError, OperationalError):
             return "Invalid use of the command"
 
     def save_to_db(self):
         if self.__validation_flag:
-            self.__db_view.set(self.__imported_data_list)
+            set_data = AddDataToDB()
+            set_data.set(self.__imported_data_list)
             return "Saved successfully"
         else:
             return "Please validate the data using the 'validate' command"
@@ -79,8 +84,9 @@ class CmdController(object):
         return self.__imported_data_list
 
     def matplot_data(self):
+        get_data = GetDataFromDB()
         # passes the db data to the matplot view
-        self.__mp_view.display(self.__db_view.get("*", ""))
+        self.__mp_view.display(get_data.get("*", ""))
 
     def db_pickle(self, sav_or_loa, line):
         # makes sure they input a parameter
@@ -88,10 +94,12 @@ class CmdController(object):
             return "Invalid use of the command"
         # Saving to a pickle file
         if sav_or_loa == 's':
-            self.__db_pic_view.set([line, self.__db_view.get('*', '')])
+            get_data = GetDataFromDB()
+            self.__db_pic_view.set([line, get_data.get('*', '')])
             return self.__db_pic_view.get()
         # Loading from a pickle file
-        else:  # must me 'l'
+        else:
+            set_data = AddDataToDB()
             array_of_input = line.split(' ')
             try:
                 if array_of_input[0] == "replace" or array_of_input[0] == \
@@ -114,12 +122,9 @@ class CmdController(object):
             # When replacing current DB
             if array_of_input[0] == "replace":
                 replace_loaded_data = [loaded_data, 'R']
-                self.__db_view.set(replace_loaded_data)
+                set_data.set(replace_loaded_data)
             # When adding to the current DB
             if array_of_input[0] == "add":
-                self.__db_view.set(loaded_data)
+                set_data.set(loaded_data)
             return "Data loaded from " + array_of_input[1] + \
                    ".pickle Successfully"
-
-    def close_db(self):
-        self.__db_view.close_connection()
