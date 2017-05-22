@@ -53,7 +53,7 @@ class CmdView(Cmd, CView):
     def do_view(self, line):
         """view
         Displays in list format data that has been brought in by 'Load'"""
-        self.output_list(self.__con.view())
+        self.output_list(self.__con.view_currently_stored_import_data())
 
     def do_matplot(self, line):
         """matplot

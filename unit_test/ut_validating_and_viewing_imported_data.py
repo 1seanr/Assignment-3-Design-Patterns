@@ -46,7 +46,7 @@ class ValidatingAndViewingTests(unittest.TestCase):
 
     def test_importAFile_thatIsInADirectory_and_viewTheData(self):
         self.con.import_from_excel("TestingDir\TestFile.xls")
-        actual = self.con.view()
+        actual = self.con.view_currently_stored_import_data()
         self.assertEqual([['A123', 'M', 16.0, 123.0, 'Normal', 23.0,
                            '20-10-2000'],
                           ['A124', 'F', 16.0, 124.0, 'Normal', 24.0,
@@ -70,7 +70,7 @@ class ValidatingAndViewingTests(unittest.TestCase):
 
     def test_importAFile_and_viewTheData(self):
         self.con.import_from_excel("TestFile.xls")
-        actual = self.con.view()
+        actual = self.con.view_currently_stored_import_data()
         self.assertEqual([['A123', 'M', 16.0, 123.0, 'Normal', 23.0,
                            '20-10-2000'],
                           ['A124', 'F', 16.0, 124.0, 'Normal', 24.0,

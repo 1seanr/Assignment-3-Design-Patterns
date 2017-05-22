@@ -19,7 +19,7 @@ class ExcelImportingTests(unittest.TestCase):
 
     def test_file_that_doesnt_exist(self):
         actual = self.con.import_from_excel(
-            r"..\TestingDir\AnotherDir\TestFile.xls")
+            "TestingDir\AnotherDir\TestFile.xls")
         self.assertEqual(['That file or directory does not exist'], actual)
 
     def test_ImportAFile_ThatDoesntExist(self):
@@ -51,6 +51,6 @@ class ExcelImportingTests(unittest.TestCase):
                            '8-7-1985']], actual)
 
     def test_importAndValidate_aTestFile_withAllValidData(self):
-        self.con.import_from_excel(r"..\TestingDir\FullRangeValidTestFile.xls")
+        self.con.import_from_excel("TestingDir\FullRangeValidTestFile.xls")
         actual = self.con.validate_data()
         self.assertEqual(actual, "Data is valid you can now save")

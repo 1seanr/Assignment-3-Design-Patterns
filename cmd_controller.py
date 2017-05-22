@@ -1,7 +1,6 @@
 from sqlite3 import OperationalError
 from db_setup import DBSetup
-from db_adding_data_view import AddDataToDB
-from db_getting_data_view import GetDataFromDB
+from db_setting_getting_data_view import SetAndGetDataFromDB
 
 from validating_input import ValidateData
 
@@ -25,7 +24,7 @@ class CmdController(object):
         self.__cmd_view.cmdloop()
 
     def load_from_db(self, line):
-        get_data = GetDataFromDB()
+        get_data = SetAndGetDataFromDB()
         try:
             if line != "":
                 selections, conditions = line.split(" ")
@@ -38,7 +37,7 @@ class CmdController(object):
 
     def save_to_db(self):
         if self.__validation_flag:
-            set_data = AddDataToDB()
+            set_data = SetAndGetDataFromDB()
             set_data.set(self.__imported_data_list)
             return "Saved successfully"
         else:
@@ -59,48 +58,47 @@ class CmdController(object):
             return ["Invalid use of the command"]
 
     def validate_data(self):
-        flag = True
+        is_all_data_valid = True
         validate_object = ValidateData(self.__imported_data_list)
-        count = 1
+        row_count = 1
         invalid_rows = ""
-        for i in validate_object.get_results():
-            per_row_flag = True
-            for j in i:
-                if not j:
-                    if per_row_flag:
-                        per_row_flag = False
-                        flag = False
-                        invalid_rows += str(count) + " "
-            count += 1
+        for row_of_data in validate_object.get_results():
+            stopping_duplicate_rows_flag = True
+            for row_item in row_of_data:
+                if not row_item:
+                    if stopping_duplicate_rows_flag:
+                        stopping_duplicate_rows_flag = False
+                        is_all_data_valid = False
+                        invalid_rows += str(row_count) + " "
+            row_count += 1
 
-        if flag:
+        if is_all_data_valid:
             self.__validation_flag = True
             return "Data is valid you can now save"
         else:
             return "Data not valid please correct it\n Invalid data on rows: "\
                    + invalid_rows
 
-    def view(self):
+    def view_currently_stored_import_data(self):
         return self.__imported_data_list
 
     def matplot_data(self):
-        get_data = GetDataFromDB()
-        # passes the db data to the matplot view
-        self.__mp_view.display(get_data.get("*", ""))
+        get_data_from_db = SetAndGetDataFromDB()
+        self.__mp_view.display(get_data_from_db.get("*", ""))
 
-    def db_pickle(self, sav_or_loa, line):
-        # makes sure they input a parameter
-        if line == "":
+    def db_pickle(self, sav_or_loa_from_db, input_command_param):
+        if input_command_param == "":
             return "Invalid use of the command"
-        # Saving to a pickle file
-        if sav_or_loa == 's':
-            get_data = GetDataFromDB()
-            self.__db_pic_view.set([line, get_data.get('*', '')])
+
+        if sav_or_loa_from_db == 's':
+            get_data_from_db = SetAndGetDataFromDB()
+            self.__db_pic_view.set([input_command_param,
+                                    get_data_from_db.get('*', '')])
             return self.__db_pic_view.get()
-        # Loading from a pickle file
+
         else:
-            set_data = AddDataToDB()
-            array_of_input = line.split(' ')
+            set_data = SetAndGetDataFromDB()
+            array_of_input = input_command_param.split(' ')
             try:
                 if array_of_input[0] == "replace" or array_of_input[0] == \
                         "add":
@@ -114,16 +112,13 @@ class CmdController(object):
 
             loaded_data = self.__db_pic_view.get()
 
-            # If it couldn't find the file it will return an error message
-            # here and stop
             if not loaded_data[0]:
                 return ['File not found']
 
-            # When replacing current DB
             if array_of_input[0] == "replace":
                 replace_loaded_data = [loaded_data, 'R']
                 set_data.set(replace_loaded_data)
-            # When adding to the current DB
+
             if array_of_input[0] == "add":
                 set_data.set(loaded_data)
             return "Data loaded from " + array_of_input[1] + \

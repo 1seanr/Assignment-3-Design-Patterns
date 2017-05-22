@@ -3,7 +3,7 @@ from db_setup import DBSetup
 from sqlite3 import IntegrityError
 
 
-class AddDataToDB(DBView):
+class SetAndGetDataFromDB(DBView):
     def set(self, data_list):
         if len(data_list) == 2:
             if data_list[1] == 'R':
@@ -28,3 +28,13 @@ class AddDataToDB(DBView):
                   "primary keys or other compromised data\n" +
                   "On line " + str(item) + "\nAll other rows have been saved")
         self.close_connection()
+
+    def get(self, selections, condition):
+        if condition != "":
+            condition = 'WHERE ' + condition
+        self._cur.execute('SELECT ' + selections + ' FROM Employee ' +
+                          condition)
+
+        rows = self._cur.fetchall()
+        self.close_connection()
+        return rows

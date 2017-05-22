@@ -14,7 +14,7 @@ class ValidateData:
                               "^[0-9]{2,3}$", ""]
         self.__data_validation_handler(data_list)
 
-    def __date_check(self, day, month, year):
+    def __valid_bday_date_and_matching_age(self, day, month, year):
         try:
             birth_date = date(year, month, day)
             today = date.today()
@@ -45,14 +45,13 @@ class ValidateData:
             self.__result_list.append(temp_result_list)
             outer_list_pos += 1
 
-    def __search_through_data_and_build_results(self, row):
+    def __search_through_data_and_build_results(self, row_of_data):
         temp_result_list = []
         inner_list_pos = 0
         try:
-            # Going through all of the items in each row
-            for col in row:
-                if col != "":
-                    self.__sort_and_check_row_data(col, inner_list_pos,
+            for row_item in row_of_data:
+                if row_item != "":
+                    self.__sort_and_check_row_data(row_item, inner_list_pos,
                                                    temp_result_list)
                 else:
                     temp_result_list.append(False)
@@ -62,20 +61,20 @@ class ValidateData:
                                 False, False)
         return temp_result_list
 
-    def __sort_and_check_row_data(self, col, inner_list_pos, temp_result_list):
+    def __sort_and_check_row_data(self, row_item, inner_list_pos,
+                                  temp_result_list):
         if inner_list_pos == 2:
-            self.__age = int(float(col))
-        # This is to check the birth date using date check method
+            self.__age = int(float(row_item))
+
         if inner_list_pos == 6:
-            self.__birth_date_check(col, temp_result_list)
-        # If its not the birth date its checking it uses the regex
-        # checking method
-        elif isinstance(col, float):
-            temp_result_list.append(self.__reg_exp_checker(
-                self.__regexp_list[inner_list_pos], str(int(col))))
-        else:
-            temp_result_list.append(self.__reg_exp_checker(
-                self.__regexp_list[inner_list_pos], col))
+            self.__birth_date_check(row_item, temp_result_list)
+            return
+
+        elif isinstance(row_item, float):
+            row_item = str(int(row_item))
+
+        temp_result_list.append(self.__reg_exp_checker(
+            self.__regexp_list[inner_list_pos], row_item))
 
     def __birth_date_check(self, col, temp_result_list):
         try:
@@ -83,9 +82,9 @@ class ValidateData:
             try:
                 day, month, year = col.split("-")
                 temp_result_list.append(
-                    self.__date_check(int(float(day)),
-                                      int(float(month)),
-                                      int(float(year))))
+                    self.__valid_bday_date_and_matching_age(int(float(day)),
+                                                            int(float(month)),
+                                                            int(float(year))))
             except ValueError:
                 pass
             if len(temp_result_list) != len(self.__regexp_list):
